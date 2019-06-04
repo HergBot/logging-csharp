@@ -1,0 +1,3 @@
+[submodule "HergBotUtilities"]
+	path = HergBotUtilities
+	url = https://github.com/HergBot/utilities-csharp

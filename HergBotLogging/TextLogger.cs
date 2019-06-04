@@ -8,8 +8,6 @@ using System;
 using System.IO;
 using System.Threading;
 
-using HergBot.Common.Logging.Logger;
-
 namespace HergBotLogging
 {
     /// <summary>
