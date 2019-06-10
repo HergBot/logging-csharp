@@ -17,17 +17,6 @@ namespace HergBotLogging
     /// </summary>
     public abstract class BaseLogger
     {
-        /// <summary>
-        /// The log file locking object for thread safe logging
-        /// </summary>
-        private static object _logFileLock = new object();
-
-        private DateTime _currentLogFileDate = DateTime.Now.Date;
-
-        private string _logFileExtension = ".log";
-
-        private string _fullLogFilePath = null;
-
         private LoggingConfiguration _configuration;
 
         /// <summary>
@@ -49,6 +38,26 @@ namespace HergBotLogging
 
         protected string ThreadName { get { return Thread.CurrentThread.Name;  } }
 
+        protected bool IsDebugEnabled { get { return _configuration.IsTypeEnabled(LoggingType.DEBUG_KEY); } }
+
+        protected string DebugLabel { get { return _configuration.GetTypeLabel(LoggingType.DEBUG_KEY); } }
+
+        protected bool IsErrorEnabled { get { return _configuration.IsTypeEnabled(LoggingType.ERROR_KEY); } }
+
+        protected string ErrorLabel { get { return _configuration.GetTypeLabel(LoggingType.ERROR_KEY); } }
+
+        protected bool IsExceptionEnabled { get { return _configuration.IsTypeEnabled(LoggingType.EXCEPTION_KEY); } }
+
+        protected string ExceptionLabel { get { return _configuration.GetTypeLabel(LoggingType.EXCEPTION_KEY); } }
+
+        protected bool IsInfoEnabled { get { return _configuration.IsTypeEnabled(LoggingType.INFO_KEY); } }
+
+        protected string InfoLabel { get { return _configuration.GetTypeLabel(LoggingType.INFO_KEY); } }
+
+        protected bool IsWarningEnabled { get { return _configuration.IsTypeEnabled(LoggingType.WARNING_KEY); } }
+
+        protected string WarningLabel { get { return _configuration.GetTypeLabel(LoggingType.WARNING_KEY); } }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -59,7 +68,7 @@ namespace HergBotLogging
             
             if (configFilePath != null)
             {
-                _configuration.LoadConfiguration(configFilePath);
+                _configuration = LoggingConfiguration.LoadFromFile(configFilePath);
             }
 
             CreateFilePath();

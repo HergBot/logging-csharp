@@ -5,8 +5,6 @@
 */
 
 using System;
-using System.IO;
-using System.Threading;
 
 namespace HergBotLogging
 {
@@ -15,6 +13,17 @@ namespace HergBotLogging
     /// </summary>
     public class TextLogger : BaseLogger, ILogger
     {
+        /// <summary>
+        /// The log file locking object for thread safe logging
+        /// </summary>
+        private static object _logFileLock = new object();
+
+        private DateTime _currentLogFileDate = DateTime.Now.Date;
+
+        private string _logFileExtension = ".log";
+
+        private string _fullLogFilePath = null;
+
         private const string TEXT_LOGGER_EXTENSION = ".log";
         /// <summary>
         /// Constructor
@@ -31,9 +40,9 @@ namespace HergBotLogging
         /// /// <param name="methodName">The method that called</param>
         public void LogDebug(string debugMessage, string methodName = EMPTY_METHOD_NAME)
         {
-            if (debugEnabled)
+            if (IsDebugEnabled)
             {
-                LogMessage(debugLabel, debugMessage, methodName);
+                LogMessage(DebugLabel, debugMessage, methodName);
             }
         }
 
@@ -44,9 +53,9 @@ namespace HergBotLogging
         /// /// <param name="methodName">The method that called</param>
         public void LogError(string errorMessage, string methodName = EMPTY_METHOD_NAME)
         {
-            if (errorEnabled)
+            if (IsErrorEnabled)
             {
-                LogMessage(errorLabel, errorMessage, methodName);
+                LogMessage(ErrorLabel, errorMessage, methodName);
             }
         }
 
@@ -57,10 +66,10 @@ namespace HergBotLogging
         /// /// <param name="methodName">The method that called</param>
         public void LogException(Exception exception, string methodName = EMPTY_METHOD_NAME)
         {
-            if (errorEnabled)
+            if (IsExceptionEnabled)
             {
-                LogMessage(excpetionLabel, exception.Message, methodName);
-                LogMessage(excpetionLabel, exception.StackTrace, methodName);
+                LogMessage(ExceptionLabel, exception.Message, methodName);
+                LogMessage(ExceptionLabel, exception.StackTrace, methodName);
             }
         }
 
@@ -71,9 +80,9 @@ namespace HergBotLogging
         /// /// <param name="methodName">The method that called</param>
         public void LogInfo(string infoMessage, string methodName = EMPTY_METHOD_NAME)
         {
-            if (errorEnabled)
+            if (IsInfoEnabled)
             {
-                LogMessage(informationLabel, infoMessage, methodName);
+                LogMessage(InfoLabel, infoMessage, methodName);
             }
         }
 
@@ -84,9 +93,9 @@ namespace HergBotLogging
         /// /// <param name="methodName">The method that called</param>
         public void LogWarning(string warningMessage, string methodName = EMPTY_METHOD_NAME)
         {
-            if (warningEnabled)
+            if (IsWarningEnabled)
             {
-                LogMessage(warningLabel, warningMessage, methodName);
+                LogMessage(WarningLabel, warningMessage, methodName);
             }
         }
 

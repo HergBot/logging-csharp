@@ -40,27 +40,51 @@ namespace HergBotLogging
             DefaultConfiguration();
         }
 
-        public void LoadConfiguration(string configFilePath)
+        public static LoggingConfiguration LoadFromFile(string configFilePath)
         {
             if (!File.Exists(configFilePath))
             {
                 throw new FileNotFoundException($"Logging configuration file at '{configFilePath}' not found.");
             }
 
+            LoggingConfiguration loadedConfig = new LoggingConfiguration();
+
             XDocument configFile = XDocument.Load(configFilePath);
             XAttribute fileNameAttribute = configFile.Root.Attribute(FILE_NAME_ATTRIBUTE);
             XAttribute windowsDirectory = configFile.Root.Attribute(WINDOWS_PATH_ATTRIBUTE);
             XAttribute linuxDirectory = configFile.Root.Attribute(LINUX_PATH_ATTIRBUTE);
-            BaseFileName = fileNameAttribute.Value;
-            LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsDirectory.Value : linuxDirectory.Value;
+            loadedConfig.BaseFileName = fileNameAttribute.Value;
+            loadedConfig.LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsDirectory.Value : linuxDirectory.Value;
             foreach (XElement element in configFile.Root.Elements())
             {
-                ReadConfigurationEntry(
+                loadedConfig.ReadConfigurationEntry(
                     element.Attribute(KEY_ATTRIBUTE).Value,
                     element.Attribute(ENABLED_ATTRIBUTE).Value,
                     element.Value
                 );
             }
+
+            return loadedConfig;
+        }
+
+        public bool IsTypeEnabled(string key)
+        {
+            if (!_loggingTypes.ContainsKey(key))
+            {
+                return false;
+            }
+
+            return _loggingTypes[key].Enabled;
+        }
+
+        public string GetTypeLabel(string key)
+        {
+            if (!_loggingTypes.ContainsKey(key))
+            {
+                return "UNKNOWN";
+            }
+
+            return _loggingTypes[key].Label;
         }
 
         private void DefaultConfiguration()
