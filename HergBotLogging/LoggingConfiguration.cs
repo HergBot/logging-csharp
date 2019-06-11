@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace HergBotLogging
 {
-    internal class LoggingConfiguration
+    public class LoggingConfiguration
     {
         private const string LOGGING_CONFIG_TAG = "LoggingConfig";
 
@@ -35,6 +35,26 @@ namespace HergBotLogging
 
         public string BaseFileName { get; private set; }
 
+        public bool IsDebugEnabled { get { return IsTypeEnabled(LoggingType.DEBUG_KEY); } }
+
+        public string DebugLabel { get { return GetTypeLabel(LoggingType.DEBUG_KEY); } }
+
+        public bool IsErrorEnabled { get { return IsTypeEnabled(LoggingType.ERROR_KEY); } }
+
+        public string ErrorLabel { get { return GetTypeLabel(LoggingType.ERROR_KEY); } }
+
+        public bool IsExceptionEnabled { get { return IsTypeEnabled(LoggingType.EXCEPTION_KEY); } }
+
+        public string ExceptionLabel { get { return GetTypeLabel(LoggingType.EXCEPTION_KEY); } }
+
+        public bool IsInfoEnabled { get { return IsTypeEnabled(LoggingType.INFO_KEY); } }
+
+        public string InfoLabel { get { return GetTypeLabel(LoggingType.INFO_KEY); } }
+
+        public bool IsWarningEnabled { get { return IsTypeEnabled(LoggingType.WARNING_KEY); } }
+
+        public string WarningLabel { get { return GetTypeLabel(LoggingType.WARNING_KEY); } }
+
         public LoggingConfiguration()
         {
             DefaultConfiguration();
@@ -47,24 +67,19 @@ namespace HergBotLogging
                 throw new FileNotFoundException($"Logging configuration file at '{configFilePath}' not found.");
             }
 
-            LoggingConfiguration loadedConfig = new LoggingConfiguration();
+            XDocument config = XDocument.Load(configFilePath);
+            return LoadConfiguration(config);
+        }
 
-            XDocument configFile = XDocument.Load(configFilePath);
-            XAttribute fileNameAttribute = configFile.Root.Attribute(FILE_NAME_ATTRIBUTE);
-            XAttribute windowsDirectory = configFile.Root.Attribute(WINDOWS_PATH_ATTRIBUTE);
-            XAttribute linuxDirectory = configFile.Root.Attribute(LINUX_PATH_ATTIRBUTE);
-            loadedConfig.BaseFileName = fileNameAttribute.Value;
-            loadedConfig.LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsDirectory.Value : linuxDirectory.Value;
-            foreach (XElement element in configFile.Root.Elements())
+        public static LoggingConfiguration LoadFromString(string configuration)
+        {
+            if (string.IsNullOrWhiteSpace(configuration))
             {
-                loadedConfig.ReadConfigurationEntry(
-                    element.Attribute(KEY_ATTRIBUTE).Value,
-                    element.Attribute(ENABLED_ATTRIBUTE).Value,
-                    element.Value
-                );
+                throw new ArgumentNullException("Configuration is null, empty, or whitespace.");
             }
 
-            return loadedConfig;
+            XDocument config = XDocument.Parse(configuration);
+            return LoadConfiguration(config);
         }
 
         public bool IsTypeEnabled(string key)
@@ -85,6 +100,26 @@ namespace HergBotLogging
             }
 
             return _loggingTypes[key].Label;
+        }
+
+        private static LoggingConfiguration LoadConfiguration(XDocument configDoc)
+        {
+            LoggingConfiguration loadedConfig = new LoggingConfiguration();
+            XAttribute fileNameAttribute = configDoc.Root.Attribute(FILE_NAME_ATTRIBUTE);
+            XAttribute windowsDirectory = configDoc.Root.Attribute(WINDOWS_PATH_ATTRIBUTE);
+            XAttribute linuxDirectory = configDoc.Root.Attribute(LINUX_PATH_ATTIRBUTE);
+            loadedConfig.BaseFileName = fileNameAttribute.Value;
+            loadedConfig.LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsDirectory.Value : linuxDirectory.Value;
+            foreach (XElement element in configDoc.Root.Elements())
+            {
+                loadedConfig.ReadConfigurationEntry(
+                    element.Attribute(KEY_ATTRIBUTE).Value,
+                    element.Attribute(ENABLED_ATTRIBUTE).Value,
+                    element.Value
+                );
+            }
+
+            return loadedConfig;
         }
 
         private void DefaultConfiguration()

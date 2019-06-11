@@ -11,11 +11,7 @@ namespace HergBotLogging_Tests
 {
     public class TextLogger_Tests
     {
-        private const string DEFAULT_CONFIG_PATH = "./Config/Default.config";
-
         private const string DEFAULT_LOG_FILE_NAME = "DefaultTestLog";
-
-        private const string ALTERNATE_CONFIG_PATH = "./Config/Alternate.config";
 
         private const string ALTERNATE_LOG_FILE_NAME = "AlternateTestLog";
 
@@ -26,13 +22,12 @@ namespace HergBotLogging_Tests
         [SetUp]
         public void SetUp()
         {
-            _logger = new TextLogger(DEFAULT_CONFIG_PATH);
+            
         }
 
         [Test]
         public void LoadConfiguration_Null()
         {
-            ILogger _testLogger = new TextLogger(null);
             
         }
 

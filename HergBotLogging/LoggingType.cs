@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HergBotLogging
 {
-    internal class LoggingType
+    public class LoggingType
     {
         public static string DEBUG_KEY = "DEBUG";
 

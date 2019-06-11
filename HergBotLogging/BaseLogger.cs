@@ -17,8 +17,6 @@ namespace HergBotLogging
     /// </summary>
     public abstract class BaseLogger
     {
-        private LoggingConfiguration _configuration;
-
         /// <summary>
         /// The format string for just the date
         /// </summary>
@@ -34,68 +32,25 @@ namespace HergBotLogging
         /// </summary>
         protected const string EMPTY_METHOD_NAME = "";
 
+        protected LoggingConfiguration Configuration;
+
         protected string Timestamp { get { return DateTime.Now.ToString(DATE_TIME_FORMAT); } }
 
         protected string ThreadName { get { return Thread.CurrentThread.Name;  } }
 
-        protected bool IsDebugEnabled { get { return _configuration.IsTypeEnabled(LoggingType.DEBUG_KEY); } }
-
-        protected string DebugLabel { get { return _configuration.GetTypeLabel(LoggingType.DEBUG_KEY); } }
-
-        protected bool IsErrorEnabled { get { return _configuration.IsTypeEnabled(LoggingType.ERROR_KEY); } }
-
-        protected string ErrorLabel { get { return _configuration.GetTypeLabel(LoggingType.ERROR_KEY); } }
-
-        protected bool IsExceptionEnabled { get { return _configuration.IsTypeEnabled(LoggingType.EXCEPTION_KEY); } }
-
-        protected string ExceptionLabel { get { return _configuration.GetTypeLabel(LoggingType.EXCEPTION_KEY); } }
-
-        protected bool IsInfoEnabled { get { return _configuration.IsTypeEnabled(LoggingType.INFO_KEY); } }
-
-        protected string InfoLabel { get { return _configuration.GetTypeLabel(LoggingType.INFO_KEY); } }
-
-        protected bool IsWarningEnabled { get { return _configuration.IsTypeEnabled(LoggingType.WARNING_KEY); } }
-
-        protected string WarningLabel { get { return _configuration.GetTypeLabel(LoggingType.WARNING_KEY); } }
-
         /// <summary>
         /// Constructor
         /// </summary>
-        public BaseLogger(string configFilePath, string fileExtension)
+        public BaseLogger(string configFilePath)
         {
-            _logFileExtension = fileExtension;
-            _configuration = new LoggingConfiguration();
+            Configuration = new LoggingConfiguration();
             
             if (configFilePath != null)
             {
-                _configuration = LoggingConfiguration.LoadFromFile(configFilePath);
-            }
-
-            CreateFilePath();
-        }
-
-        protected void WriteToFile(string message)
-        {
-            lock (_logFileLock)
-            {
-                using (StreamWriter writer = File.AppendText(_fullLogFilePath))
-                {
-                    writer.WriteLine(message);
-                }
+                Configuration = LoggingConfiguration.LoadFromFile(configFilePath);
             }
         }
 
-        private void CreateFilePath()
-        {
-            _fullLogFilePath = $"{_configuration.LogDirectory}{_configuration.BaseFileName}_{_currentLogFileDate.ToString(DATE_FORMAT)}.{_logFileExtension}";
-        }
-
-        private void CheckLogFileDate()
-        {
-            if (_currentLogFileDate < DateTime.Now.Date)
-            {
-                CreateFilePath();
-            }
-        }
+        
     }
 }
