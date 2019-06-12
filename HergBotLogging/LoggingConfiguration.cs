@@ -22,13 +22,6 @@ namespace HergBotLogging
 
         private const string LOGGING_TYPE_TAG = "LoggingType";
 
-        private const string KEY_ATTRIBUTE = "key";
-
-        /// <summary>
-        /// The logging type enabled xml attribute
-        /// </summary>
-        private const string ENABLED_ATTRIBUTE = "enabled";
-
         private Dictionary<string, LoggingType> _loggingTypes;
 
         public string LogDirectory { get; private set; }
@@ -105,6 +98,7 @@ namespace HergBotLogging
         private static LoggingConfiguration LoadConfiguration(XDocument configDoc)
         {
             LoggingConfiguration loadedConfig = new LoggingConfiguration();
+            loadedConfig.ClearConfiguration();
             XAttribute fileNameAttribute = configDoc.Root.Attribute(FILE_NAME_ATTRIBUTE);
             XAttribute windowsDirectory = configDoc.Root.Attribute(WINDOWS_PATH_ATTRIBUTE);
             XAttribute linuxDirectory = configDoc.Root.Attribute(LINUX_PATH_ATTIRBUTE);
@@ -120,6 +114,11 @@ namespace HergBotLogging
             }
 
             return loadedConfig;
+        }
+
+        private static void VerifyRootAttributes(XDocument configDoc)
+        {
+
         }
 
         private void DefaultConfiguration()
@@ -142,10 +141,14 @@ namespace HergBotLogging
         /// <param name="label">The label for this type of entry</param>
         private void ReadConfigurationEntry(string type, string enabledValue, string label)
         {
-            bool isTypeEnabled = true;
-            // Try to parse out the vale, if it doesn't work it will default to true
-            bool.TryParse(enabledValue, out isTypeEnabled);
-            _loggingTypes.Add(type, new LoggingType(isTypeEnabled, label));
+            
+        }
+
+        private void ClearConfiguration()
+        {
+            LogDirectory = string.Empty;
+            BaseFileName = string.Empty;
+            _loggingTypes.Clear();
         }
     }
 }

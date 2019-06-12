@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ConfigTestData.cs" />
-    <Compile Include="TextLogger_Tests.cs" />
+    <Compile Include="LoggingConfiguration_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

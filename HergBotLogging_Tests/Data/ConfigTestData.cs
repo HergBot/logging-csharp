@@ -8,18 +8,18 @@ namespace HergBotLogging_Tests.Data
 {
     public class ConfigTestData
     {
-        public string DefaultConfig
+        public string PrimaryConfig
         {
             get
             {
                 return @"<?xml version=""1.0"" encoding=""utf-8""?>
                         <LoggingConfig
                             linuxPath=""/opt/hergbot/appname/logs/""
-                            windowsPath=""./Logs/""
-                            fileName=""DefaultTestLog""
+                            windowsPath=""./logs/""
+                            fileName=""PrimaryTestLog""
                         >
                             <LoggingType key=""DEBUG"" enabled=""True"">Debug</LoggingType>
-                            <LoggingType key=""ERROR"" enabled=""True"">Error</ LoggingType>
+                            <LoggingType key=""ERROR"" enabled=""True"">Error</LoggingType>
                             <LoggingType key=""EXCEPTION"" enabled=""True"">Exception</LoggingType>
                             <LoggingType key=""INFO"" enabled=""True"">Information</LoggingType>
                             <LoggingType key=""WARNING"" enabled=""True"">Warning</LoggingType>
@@ -34,11 +34,30 @@ namespace HergBotLogging_Tests.Data
                 return @"<?xml version=""1.0"" encoding=""utf-8""?>
                         <LoggingConfig
                             linuxPath=""/opt/hergbot/appname/logs/""
-                            windowsPath=""./Logs/""
+                            windowsPath=""./logs/""
                             fileName=""AlternateTestLog""
                         >
                             <LoggingType key=""DEBUG"" enabled=""False"">Debug</LoggingType>
-                            <LoggingType key=""ERROR"" enabled=""True"">Error</ LoggingType>
+                            <LoggingType key=""ERROR"" enabled=""True"">Error</LoggingType>
+                            <LoggingType key=""EXCEPTION"" enabled=""True"">Exception</LoggingType>
+                            <LoggingType key=""INFO"" enabled=""True"">Information</LoggingType>
+                            <LoggingType key=""WARNING"" enabled=""True"">Warning</LoggingType>
+                        </LoggingConfig>";
+            }
+        }
+
+        // Missing fileName attribute
+        public string MissingAttributeConfig
+        {
+            get
+            {
+                return @"<?xml version=""1.0"" encoding=""utf-8""?>
+                        <LoggingConfig
+                            linuxPath=""/opt/hergbot/appname/logs/""
+                            windowsPath=""./logs/""
+                        >
+                            <LoggingType key=""DEBUG"" enabled=""True"">Debug</LoggingType>
+                            <LoggingType key=""ERROR"" enabled=""True"">Error</LoggingType>
                             <LoggingType key=""EXCEPTION"" enabled=""True"">Exception</LoggingType>
                             <LoggingType key=""INFO"" enabled=""True"">Information</LoggingType>
                             <LoggingType key=""WARNING"" enabled=""True"">Warning</LoggingType>
