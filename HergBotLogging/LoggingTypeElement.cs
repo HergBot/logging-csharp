@@ -7,6 +7,8 @@ namespace HergBotLogging
 {
     internal class LoggingTypeElement
     {
+        public static string TAG = "LoggingType";
+
         private const string KEY_ATTRIBUTE = "key";
 
         /// <summary>
@@ -29,12 +31,17 @@ namespace HergBotLogging
 
         public static  LoggingTypeElement Parse(XElement element)
         {
+            if (element == null)
+            {
+                throw new FormatException($"'{TAG}' tag not found.");
+            }
+
             XAttribute keyAttribute = element.Attribute(KEY_ATTRIBUTE);
             XAttribute enabledAttribute = element.Attribute(ENABLED_ATTRIBUTE);
 
             if (keyAttribute == null)
             {
-                throw new FormatException($"'{KEY_ATTRIBUTE}' attribute of LoggingType element is missing.");
+                throw new FormatException($"'{KEY_ATTRIBUTE}' attribute of {TAG} element is missing.");
             }
 
             if (enabledAttribute == null)

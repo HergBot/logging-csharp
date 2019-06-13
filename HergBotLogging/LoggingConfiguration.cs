@@ -9,19 +9,6 @@ namespace HergBotLogging
 {
     public class LoggingConfiguration
     {
-        private const string LOGGING_CONFIG_TAG = "LoggingConfig";
-
-        private const string WINDOWS_PATH_ATTRIBUTE = "windowsPath";
-
-        private const string LINUX_PATH_ATTIRBUTE = "linuxPath";
-
-        /// <summary>
-        /// The file name xml attribute
-        /// </summary>
-        private const string FILE_NAME_ATTRIBUTE = "fileName";
-
-        private const string LOGGING_TYPE_TAG = "LoggingType";
-
         private Dictionary<string, LoggingType> _loggingTypes;
 
         public string LogDirectory { get; private set; }
@@ -51,6 +38,12 @@ namespace HergBotLogging
         public LoggingConfiguration()
         {
             DefaultConfiguration();
+        }
+
+        public LoggingConfiguration(string baseFileName, string windowsLogPath, string linuxLogPath)
+        {
+            BaseFileName = baseFileName;
+            LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsLogPath : linuxLogPath;
         }
 
         public static LoggingConfiguration LoadFromFile(string configFilePath)
@@ -97,28 +90,10 @@ namespace HergBotLogging
 
         private static LoggingConfiguration LoadConfiguration(XDocument configDoc)
         {
-            LoggingConfiguration loadedConfig = new LoggingConfiguration();
-            loadedConfig.ClearConfiguration();
-            XAttribute fileNameAttribute = configDoc.Root.Attribute(FILE_NAME_ATTRIBUTE);
-            XAttribute windowsDirectory = configDoc.Root.Attribute(WINDOWS_PATH_ATTRIBUTE);
-            XAttribute linuxDirectory = configDoc.Root.Attribute(LINUX_PATH_ATTIRBUTE);
-            loadedConfig.BaseFileName = fileNameAttribute.Value;
-            loadedConfig.LogDirectory = OperatingSystemUtilities.IsWindows() ? windowsDirectory.Value : linuxDirectory.Value;
-            foreach (XElement element in configDoc.Root.Elements())
-            {
-                loadedConfig.ReadConfigurationEntry(
-                    element.Attribute(KEY_ATTRIBUTE).Value,
-                    element.Attribute(ENABLED_ATTRIBUTE).Value,
-                    element.Value
-                );
-            }
-
-            return loadedConfig;
-        }
-
-        private static void VerifyRootAttributes(XDocument configDoc)
-        {
-
+            LoggingConfigElement loggingConfigElement = LoggingConfigElement.Parse(
+                configDoc.Element(LoggingConfigElement.TAG)
+            );
+            return loggingConfigElement.ToLoggingConfiguration();
         }
 
         private void DefaultConfiguration()
@@ -131,24 +106,6 @@ namespace HergBotLogging
             _loggingTypes.Add(LoggingType.EXCEPTION_KEY, new LoggingType(true, "Exception"));
             _loggingTypes.Add(LoggingType.INFO_KEY, new LoggingType(true, "Info"));
             _loggingTypes.Add(LoggingType.WARNING_KEY, new LoggingType(true, "Warning"));
-        }
-
-        /// <summary>
-        /// Parses an xml element for the logging info
-        /// </summary>
-        /// <param name="type">The type of log entry</param>
-        /// <param name="enabledValue">Whether this type is enabled</param>
-        /// <param name="label">The label for this type of entry</param>
-        private void ReadConfigurationEntry(string type, string enabledValue, string label)
-        {
-            
-        }
-
-        private void ClearConfiguration()
-        {
-            LogDirectory = string.Empty;
-            BaseFileName = string.Empty;
-            _loggingTypes.Clear();
         }
     }
 }
