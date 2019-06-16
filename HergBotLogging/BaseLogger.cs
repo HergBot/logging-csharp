@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml.Linq;
 
+using HergBotLogging.Configuration;
+
 namespace HergBotLogging
 {
     /// <summary>
