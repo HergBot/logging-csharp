@@ -1,29 +1,21 @@
 ﻿/*
 * PROJECT: HergBot Logging
 * PROGRAMMER: Justin
-* FIRST VERSION: 04/08/2017
+* FIRST VERSION: 16/06/2019
 */
 
 using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Xml.Linq;
 
-using HergBotLogging.Configuration;
+using HergBot.Logging.Configuration;
 
-namespace HergBotLogging
+namespace HergBot.Logging
 {
     /// <summary>
     /// A base class that reads and handles the logging configuration
     /// </summary>
     public abstract class BaseLogger
     {
-        /// <summary>
-        /// The format string for just the date
-        /// </summary>
-        protected const string DATE_FORMAT = "yyyy-MM-dd";
-
         /// <summary>
         /// The format string for a date with time
         /// </summary>
@@ -34,15 +26,25 @@ namespace HergBotLogging
         /// </summary>
         protected const string EMPTY_METHOD_NAME = "";
 
+        /// <summary>
+        /// The configuration used for logging
+        /// </summary>
         protected LoggingConfiguration Configuration;
 
+        /// <summary>
+        /// A formatted timestamp string
+        /// </summary>
         protected string Timestamp { get { return DateTime.Now.ToString(DATE_TIME_FORMAT); } }
 
+        /// <summary>
+        /// The current threads name
+        /// </summary>
         protected string ThreadName { get { return Thread.CurrentThread.Name;  } }
 
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="configFilePath">Path to the logging configuration file</param>
         public BaseLogger(string configFilePath)
         {
             Configuration = new LoggingConfiguration();
@@ -52,7 +54,5 @@ namespace HergBotLogging
                 Configuration = LoggingConfiguration.LoadFromFile(configFilePath);
             }
         }
-
-        
     }
 }

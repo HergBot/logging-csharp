@@ -6,10 +6,10 @@
 
 using System;
 
-namespace HergBotLogging
+namespace HergBot.Logging
 {
     /// <summary>
-    /// An interface that provides a common logging class
+    /// An interface to follow for implementing HergBot Logging classes
     /// </summary>
     public interface ILogger
     {

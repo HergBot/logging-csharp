@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 
-using HergBotUtilities.EnvironmentUtilities;
+using HergBot.Utilities.EnvironmentUtilities;
 
-namespace HergBotLogging.Configuration
+namespace HergBot.Logging.Configuration
 {
     /// <summary>
     /// Contains the configuration for using HergBot Logging

@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HergBotLogging.Configuration;
-using NUnit.Framework;
-using Moq;
+﻿/*
+* PROJECT: HergBot Logging Tests
+* PROGRAMMER: Justin
+* FIRST VERSION: 16/06/2019
+*/
+
+using System;
 using System.IO;
-using HergBotLogging_Tests.Data;
 using System.Xml;
 
-namespace HergBotLogging_Tests
+using NUnit.Framework;
+
+using HergBot.Logging.Configuration;
+using HergBot.Logging_Tests.Data;
+
+namespace HergBot.Logging_Tests
 {
     public class LoggingConfiguration_Tests
     {

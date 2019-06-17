@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+* PROJECT: HergBot Logging Tests
+* PROGRAMMER: Justin
+* FIRST VERSION: 16/06/2019
+*/
 
-namespace HergBotLogging_Tests.Data
+namespace HergBot.Logging_Tests.Data
 {
+    /// <summary>
+    /// String versions of logging configurations for testing
+    /// </summary>
     public class ConfigTestData
     {
+        /// <summary>
+        /// A basic logging configuration with all the default types enabled
+        /// </summary>
         public string PrimaryConfig
         {
             get
@@ -27,6 +33,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
+        /// <summary>
+        /// An alternate logging configuration with all the default types enabled except Debug
+        /// </summary>
         public string AlternativeConfig
         {
             get
@@ -46,7 +55,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
-        // Missing fileName attribute
+        /// <summary>
+        /// A logging configuration missing the fileName attribute in the LoggingConfig element
+        /// </summary>
         public string MissingAttributeConfig
         {
             get
@@ -65,7 +76,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
-        // Missing root element
+        /// <summary>
+        /// A logging configuration missing the root LoggingConfig element
+        /// </summary>
         public string MissingRootConfig
         {
             get
@@ -74,6 +87,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
+        /// <summary>
+        /// A logging configuration with the wrong root element name
+        /// </summary>
         public string MissingElementConfig
         {
             get
@@ -83,6 +99,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
+        /// <summary>
+        /// A logging configuration with a new logging type outside the defaults
+        /// </summary>
         public string UnknownLoggingTypeConfig
         {
             get
@@ -103,6 +122,9 @@ namespace HergBotLogging_Tests.Data
             }
         }
 
+        /// <summary>
+        /// A logging configuration missing the Debug default logging type
+        /// </summary>
         public string MissingDebugLoggingTypeConfig
         {
             get

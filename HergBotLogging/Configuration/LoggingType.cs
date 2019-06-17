@@ -4,7 +4,7 @@
 * FIRST VERSION: 16/06/2019
 */
 
-namespace HergBotLogging.Configuration
+namespace HergBot.Logging.Configuration
 {
     /// <summary>
     /// Contains the information about a specific type of log message

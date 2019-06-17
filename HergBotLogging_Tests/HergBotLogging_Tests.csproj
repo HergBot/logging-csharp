@@ -62,8 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ConfigTestData.cs" />
+    <Compile Include="LogFilePath_Tests.cs" />
     <Compile Include="LoggingConfiguration_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextLogMessageGenerator_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -72,6 +74,10 @@
     <ProjectReference Include="..\HergBotLogging\HergBotLogging.csproj">
       <Project>{5D194580-362E-4548-B476-2AC5FB46AE1B}</Project>
       <Name>HergBotLogging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HergBotUtilities\HergBotUtilities\HergBotUtilities.csproj">
+      <Project>{EE63FB44-0562-492F-87CE-D4A668B40EC3}</Project>
+      <Name>HergBotUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

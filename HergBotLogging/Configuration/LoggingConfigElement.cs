@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace HergBotLogging.Configuration
+namespace HergBot.Logging.Configuration
 {
     /// <summary>
     /// Parses and contains the information in a LoggingConfig XML element.
