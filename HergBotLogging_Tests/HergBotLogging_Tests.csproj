@@ -38,6 +38,9 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="HergBotUtilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HergBot.Utilities.1.0.0\lib\netstandard2.0\HergBotUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.11.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.11.0\lib\net45\Moq.dll</HintPath>
     </Reference>
@@ -74,10 +77,6 @@
     <ProjectReference Include="..\HergBotLogging\HergBotLogging.csproj">
       <Project>{5D194580-362E-4548-B476-2AC5FB46AE1B}</Project>
       <Name>HergBotLogging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HergBotUtilities\HergBotUtilities\HergBotUtilities.csproj">
-      <Project>{EE63FB44-0562-492F-87CE-D4A668B40EC3}</Project>
-      <Name>HergBotUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
