@@ -2,10 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>HergBot.Logging</PackageId>
+    <Authors>Justin</Authors>
+    <Company>HergBot</Company>
+    <Product>HergBot.Logging</Product>
+    <Description>A basic logging library that can produce plain text logs and can be extended to more specific logging options.</Description>
+    <RepositoryUrl>https://github.com/HergBot/logging-csharp</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HergBotUtilities\HergBotUtilities\HergBotUtilities.csproj" />
+    <PackageReference Include="HergBot.Utilities" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
