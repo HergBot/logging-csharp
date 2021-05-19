@@ -41,6 +41,10 @@ namespace HergBot.Logging
         {
             _messageGenerator = generator;
             _logFilePath = new LogFilePath(Configuration.LogDirectory, Configuration.BaseFileName, fileExtension);
+            if (!Directory.Exists(Configuration.LogDirectory))
+            {
+                Directory.CreateDirectory(Configuration.LogDirectory);
+            }
         }
 
         /// <summary>

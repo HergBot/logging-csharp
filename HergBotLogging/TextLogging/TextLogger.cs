@@ -14,7 +14,7 @@ namespace HergBot.Logging.TextLogging
         /// <summary>
         /// The extension to use for the text logs
         /// </summary>
-        private const string TEXT_LOG_EXTENSION = ".log";
+        private const string TEXT_LOG_EXTENSION = "log";
 
         /// <summary>
         /// Constructor
