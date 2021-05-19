@@ -9,6 +9,7 @@
     <Description>A basic logging library that can produce plain text logs and can be extended to more specific logging options.</Description>
     <RepositoryUrl>https://github.com/HergBot/logging-csharp</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
